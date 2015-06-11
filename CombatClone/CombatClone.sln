@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombatClone", "CombatClone\CombatClone\CombatClone.csproj", "{3B817829-048C-4940-AF9B-B287CDA89897}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "CombatCloneContent", "CombatClone\CombatCloneContent\CombatCloneContent.contentproj", "{2FA05EF6-E735-40BF-A2E7-BE33A35F8866}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B817829-048C-4940-AF9B-B287CDA89897}.Debug|x86.ActiveCfg = Debug|x86
+		{3B817829-048C-4940-AF9B-B287CDA89897}.Debug|x86.Build.0 = Debug|x86
+		{3B817829-048C-4940-AF9B-B287CDA89897}.Release|x86.ActiveCfg = Release|x86
+		{3B817829-048C-4940-AF9B-B287CDA89897}.Release|x86.Build.0 = Release|x86
+		{2FA05EF6-E735-40BF-A2E7-BE33A35F8866}.Debug|x86.ActiveCfg = Debug|x86
+		{2FA05EF6-E735-40BF-A2E7-BE33A35F8866}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
