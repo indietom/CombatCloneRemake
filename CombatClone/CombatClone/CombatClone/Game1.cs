@@ -11,9 +11,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace CombatClone
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -32,6 +29,7 @@ namespace CombatClone
             AssetManager.Load(Content);
 
             GameObjectManager.Add(new Player());
+            GameObjectManager.Add(new Expolsion(new Vector2(100, 100), 65, true));
 
             base.Initialize();
         }

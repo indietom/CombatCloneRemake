@@ -25,6 +25,7 @@ namespace CombatClone
 
         bool inputActive;
         bool disabeld;
+        bool deadCrew;
 
         public Player()
         {
@@ -58,6 +59,8 @@ namespace CombatClone
 
         public void Input()
         {
+            Random random = new Random();
+
             if (gamePad.ThumbSticks.Right.Y >= 0.2f || gamePad.ThumbSticks.Right.Y <= -0.2 || gamePad.ThumbSticks.Right.X >= 0.2f || gamePad.ThumbSticks.Right.X <= -0.2)
                 turretRotation = (float)Math.Atan2(-gamePad.ThumbSticks.Right.Y, gamePad.ThumbSticks.Right.X);
 
@@ -71,7 +74,7 @@ namespace CombatClone
             {
                 if (gunType == 0)
                 {
-                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 10, (float)Math.Sin(turretRotation) * 10), Globals.RadianToDegrees(turretRotation), Speed + 3, 0, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 10, (float)Math.Sin(turretRotation) * 10), Globals.RadianToDegrees(turretRotation)+random.Next(-8, 9), (float)Math.Abs(Speed) + 5, 0, 1, false));
                 }
                 fireRate = 1;
             }
@@ -100,7 +103,7 @@ namespace CombatClone
         {
             if (hp >= 1)
             {
-                spriteBatch.Draw(AssetManager.spritesheet, Pos , new Rectangle(34, 1, 28, 20), Color, turretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 1);
+                spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, turretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 1);
             }
             base.DrawSprite(spriteBatch);
         }

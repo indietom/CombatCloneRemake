@@ -9,7 +9,7 @@ namespace CombatClone
     class Projectile : GameObject
     {
         byte type;
-        byte damege;
+        public byte Damege { get; private set; }
 
         public bool enemy;
 
@@ -23,7 +23,7 @@ namespace CombatClone
             type = type2;
             AssignType();
 
-            damege = damege2;
+            Damege = damege2;
 
             enemy = enemy2;
 

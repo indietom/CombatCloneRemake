@@ -23,9 +23,40 @@ namespace CombatClone
         public float Z { get; set; }
         public float Rotation { get; set; }
 
-        public Color Color { get; set; } 
+        public Color Color { get; set; }
+
+        public short AnimationCount { get; set; }
+        public short MaxAnimationCount { get; set; }
+        public short MaxFrame { get; set; }
+        public short MinFrame { get; set; }
+        public short CurrentFrame { get; set; }
+        
 
         public bool destroy;
+
+        public Rectangle Hitbox
+        {
+            get { return new Rectangle((int)(Pos.X - Orgin.X), (int)(Pos.Y - Orgin.Y), Size.X * (int)Scale, Size.Y * (int)Scale); }
+        }
+
+        public void Animate()
+        {
+            if (AnimationCount >= MaxAnimationCount)
+            {
+                CurrentFrame = (CurrentFrame >= MaxFrame) ? (short)0 : (short)(CurrentFrame + 1);
+                AnimationCount = 0;
+            }
+        }
+
+        public int Frame(int cell)
+        {
+            return 32 * cell + cell + 1;
+        }
+
+        public int Frame(int cell, int size)
+        {
+            return size * cell + cell + 1;
+        }
 
         public void AngleMath()
         {
