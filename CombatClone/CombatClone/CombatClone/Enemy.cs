@@ -23,6 +23,8 @@ namespace CombatClone
         public float ProjectileSpeed { private get; set; }
         public float ShootAngle { private get; set; }
 
+        public bool leaveCorpse;
+
         // All abord the OOP nightmare train
         public Projectile ProjectilePrototype 
         { 
@@ -37,6 +39,15 @@ namespace CombatClone
                 {
                     Hp -= (sbyte)p.Damege;
                     p.destroy = true;
+                }
+            }
+
+            if (Hp <= 0 && !leaveCorpse)
+            {
+                destroy = true;
+                if (Size.X == 32)
+                {
+                    GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, false));
                 }
             }
         }

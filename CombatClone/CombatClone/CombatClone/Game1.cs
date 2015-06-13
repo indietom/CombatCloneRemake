@@ -29,8 +29,7 @@ namespace CombatClone
             AssetManager.Load(Content);
 
             GameObjectManager.Add(new Player());
-            GameObjectManager.Add(new Expolsion(new Vector2(100, 100), 65, true));
-
+            
             base.Initialize();
         }
 
@@ -49,6 +48,8 @@ namespace CombatClone
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            Random random = new Random();
+            if(GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed) GameObjectManager.Add(new AttackPlane(new Vector2(100, 100), random));
             GameObjectManager.Update();
 
             base.Update(gameTime);

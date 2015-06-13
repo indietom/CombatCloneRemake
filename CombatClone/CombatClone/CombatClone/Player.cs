@@ -13,6 +13,8 @@ namespace CombatClone
         GamePadState gamePad;
         GamePadState prevGamePad;
 
+        Vector2 crossHair;
+
         float friction;
         float turretRotation;
 
@@ -22,6 +24,7 @@ namespace CombatClone
         byte gunType;
 
         sbyte hp;
+        sbyte maxHp;
 
         bool inputActive;
         bool disabeld;
@@ -34,7 +37,8 @@ namespace CombatClone
             Pos = new Vector2(320, 240);
 
             friction = 0.95f;
-            hp = 3;
+            maxHp = 3;
+            hp = maxHp;
 
             SpriteCoords = new Point(1, 1);
             Size = new Point(32, 32);
@@ -74,7 +78,7 @@ namespace CombatClone
             {
                 if (gunType == 0)
                 {
-                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 10, (float)Math.Sin(turretRotation) * 10), Globals.RadianToDegrees(turretRotation)+random.Next(-8, 9), (float)Math.Abs(Speed) + 5, 0, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 10, (float)Math.Sin(turretRotation) * 10), Globals.RadianToDegrees(turretRotation)+random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 0, 1, false));
                 }
                 fireRate = 1;
             }
@@ -94,6 +98,8 @@ namespace CombatClone
                 if (fireRate >= maxFireRate) fireRate = 0;
             }
 
+            crossHair = new Vector2(Globals.Lerp(crossHair.X, ((float)Math.Cos(turretRotation) * 100), 0.1f), Globals.Lerp(crossHair.Y, ((float)Math.Sin(turretRotation) * 100), 0.1f));
+
             Rotation = Angle;
 
             base.Update();
@@ -103,8 +109,9 @@ namespace CombatClone
         {
             if (hp >= 1)
             {
-                spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, turretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 1);
+                spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, turretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.99f);
             }
+            spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), Color.Red, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
             base.DrawSprite(spriteBatch);
         }
     }

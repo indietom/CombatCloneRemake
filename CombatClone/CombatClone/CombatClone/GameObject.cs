@@ -65,7 +65,7 @@ namespace CombatClone
 
         public float GetAimAngle(Vector2 target)
         {
-            return Globals.RadianToDegrees((float)Math.Atan2(Pos.Y - target.Y, Pos.X - target.X));
+            return Globals.RadianToDegrees((float)Math.Atan2(target.Y - Pos.Y, target.X - Pos.X));
         }
 
         public float GetDistance(Vector2 target)
