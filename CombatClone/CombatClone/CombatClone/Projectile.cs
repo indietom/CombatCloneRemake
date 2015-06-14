@@ -38,6 +38,8 @@ namespace CombatClone
             AngleMath();
             Pos += Velocity;
 
+            if (Pos.X >= 640 + Size.X || Pos.X < -Size.X * 2 || Pos.Y >= 480 + Size.Y || Pos.Y <= -Size.Y * 2) destroy = true;
+
             switch (type)
             {
                 case 0:
@@ -56,6 +58,11 @@ namespace CombatClone
                     SpriteCoords = new Point(67, 1);
                     Size = new Point(8, 8);
                     Orgin = new Vector2(4, 4);
+                    break;
+                case 1:
+                    SpriteCoords = new Point(67, 10);
+                    Size = new Point(4, 4);
+                    Orgin = new Vector2(2, 2);
                     break;
             }
         }

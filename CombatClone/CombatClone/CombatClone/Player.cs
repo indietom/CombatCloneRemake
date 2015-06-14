@@ -50,6 +50,8 @@ namespace CombatClone
             inputActive = true;
 
             maxFireRate = 32;
+
+            Z = 0.9f;
         }
 
         public void Movment()
@@ -111,7 +113,7 @@ namespace CombatClone
             {
                 spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, turretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.99f);
             }
-            spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), Color.Red, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), Color.Black, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
             base.DrawSprite(spriteBatch);
         }
     }

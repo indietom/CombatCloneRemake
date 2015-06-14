@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apc.cs" />
     <Compile Include="AssetManager.cs" />
     <Compile Include="AttackPlane.cs" />
     <Compile Include="Enemy.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="GameObjectManager.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="Infantry.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
