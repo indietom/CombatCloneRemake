@@ -49,7 +49,7 @@ namespace CombatClone
                 this.Exit();
 
             Random random = new Random();
-            if(GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed && GameObjectManager.gameObjects.Count <= 1) GameObjectManager.Add(new Apc(new Vector2(500, 400)));
+            if(GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed && GameObjectManager.gameObjects.Count <= 1) GameObjectManager.Add(new Infantry(new Vector2(500, 400), random));
             GameObjectManager.Update();
 
             base.Update(gameTime);

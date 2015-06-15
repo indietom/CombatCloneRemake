@@ -28,6 +28,7 @@ namespace CombatClone
         public float OrginalSpeed { get; set; }
 
         public bool leaveCorpse;
+        public bool stoping;
 
         // All abord the OOP nightmare train
         public Projectile ProjectilePrototype 
@@ -88,11 +89,13 @@ namespace CombatClone
                     {
                         FireRate += 1;
                         Speed = Globals.Lerp(Speed, 0, 0.1f);
+                        stoping = true;
                     }
                     else
                     {
                         FireRate = 0;
                         Speed = Globals.Lerp(Speed, OrginalSpeed, 0.1f);
+                        stoping = false;
                     }
                 }
             }
@@ -101,6 +104,7 @@ namespace CombatClone
                 if (FireRate >= MaxFireRate)
                 {
                     GameObjectManager.Add(ProjectilePrototype);
+                    FireRate = 0;
                 }
             }
             else

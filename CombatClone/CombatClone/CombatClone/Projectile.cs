@@ -45,6 +45,14 @@ namespace CombatClone
                 case 0:
                     Rotation += 10;
                     break;
+                case 2:
+                    Speed = Globals.Lerp(Speed, 0, 0.05f);
+                    if (Speed <= 0.1f)
+                    {
+                        GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, true));
+                        destroy = true;
+                    }
+                    break;
             }
 
             base.Update();
@@ -63,6 +71,11 @@ namespace CombatClone
                     SpriteCoords = new Point(67, 10);
                     Size = new Point(4, 4);
                     Orgin = new Vector2(2, 2);
+                    break;
+                case 2:
+                    SpriteCoords = new Point(43, 150);
+                    Size = new Point(8, 8);
+                    Orgin = new Vector2(4, 4);
                     break;
             }
         }
