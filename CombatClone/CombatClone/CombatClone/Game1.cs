@@ -16,6 +16,8 @@ namespace CombatClone
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        internal static Gui gui = new Gui();
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -30,6 +32,8 @@ namespace CombatClone
 
             GameObjectManager.Add(new Player());
             
+            GameObjectManager.Add(new Apc(new Vector2(500, 400)));
+
             base.Initialize();
         }
 
@@ -49,7 +53,7 @@ namespace CombatClone
                 this.Exit();
 
             Random random = new Random();
-            if(GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed && GameObjectManager.gameObjects.Count <= 1) GameObjectManager.Add(new Infantry(new Vector2(500, 400), random));
+            if(GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed && GameObjectManager.gameObjects.Count <= 1) GameObjectManager.Add(new ArmoredCar(new Vector2(500, 400)));
             GameObjectManager.Update();
 
             base.Update(gameTime);
@@ -63,6 +67,10 @@ namespace CombatClone
 
             foreach (GameObject g in GameObjectManager.gameObjects) g.DrawSprite(spriteBatch);
 
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            gui.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

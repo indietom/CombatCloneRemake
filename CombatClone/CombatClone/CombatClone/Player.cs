@@ -15,20 +15,23 @@ namespace CombatClone
 
         Vector2 crossHair;
 
+        public int Score { get; set; }
+
         float friction;
         float turretRotation;
 
         short fireRate;
-        short maxFireRate;
+        short explosionDelay;
 
         byte gunType;
 
-        sbyte hp;
+        public sbyte Hp { get; set; }
         sbyte maxHp;
 
         bool inputActive;
         bool disabeld;
         bool deadCrew;
+        bool invisible;
 
         public Player()
         {
@@ -38,7 +41,7 @@ namespace CombatClone
 
             friction = 0.95f;
             maxHp = 3;
-            hp = maxHp;
+            Hp = maxHp;
 
             SpriteCoords = new Point(1, 1);
             Size = new Point(32, 32);
@@ -47,11 +50,36 @@ namespace CombatClone
             Color = new Color(random.Next(100, 255), random.Next(100, 255), random.Next(100, 255));
             Scale = 1;
 
+            gunType = 3;
             inputActive = true;
 
-            maxFireRate = 32;
-
             Z = 0.9f;
+        }
+
+        public short MaxFireRate
+        {
+            get
+            {
+                short maxFireRate = 0;
+
+                switch (gunType)
+                {
+                    case 0:
+                        maxFireRate = 32;
+                        break;
+                    case 1:
+                        maxFireRate = 48;
+                        break;
+                    case 2:
+                        maxFireRate = 8;
+                        break;
+                    case 3:
+                        maxFireRate = 64;
+                        break;
+                }
+
+                return maxFireRate;
+            }
         }
 
         public void Movment()
@@ -80,9 +108,48 @@ namespace CombatClone
             {
                 if (gunType == 0)
                 {
-                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 10, (float)Math.Sin(turretRotation) * 10), Globals.RadianToDegrees(turretRotation)+random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 0, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation)+random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 0, 1, false));
+                }
+                if (gunType == 1)
+                {
+                    for (int i = -1; i < 2; i++)
+                    {
+                        GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + i*-8, (float)Math.Abs(Speed) + 10, 0, 1, false));
+                    }
+                }
+                if (gunType == 2)
+                {
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + random.Next(-16, 17), (float)Math.Abs(Speed) + 10, 0, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + random.Next(-32, 33), (float)Math.Abs(Speed) + 10 + random.Next(-3, 6), 1, 1, false));
+                }
+                if (gunType == 3)
+                {
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + random.Next(-8, 9), (float)Math.Abs(Speed) + 1, 4, 1, false));
                 }
                 fireRate = 1;
+            }
+        }
+
+        public void UpdateHealth()
+        {
+            foreach (Projectile p in GameObjectManager.gameObjects.Where(item => item is Projectile))
+            {
+                if (p.Hitbox.Intersects(Hitbox) && p.enemy)
+                {
+                    Hp -= (sbyte)p.Damege;
+                    p.destroy = true;
+                }
+            }
+
+            if (Hp <= 0)
+            {
+                inputActive = false;
+                explosionDelay += 1;
+                if (explosionDelay >= 8*4 + 24)
+                {
+                    GameObjectManager.Add(new Expolsion(Pos - new Vector2(32, 32), 65, false));
+                    explosionDelay = 0;
+                }
             }
         }
 
@@ -91,13 +158,15 @@ namespace CombatClone
             prevGamePad = gamePad;
             gamePad = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.Circular);
 
+            if(!invisible) UpdateHealth();
+
             if (inputActive) Input();
             Movment();
 
             if (fireRate >= 1)
             {
                 fireRate += 1;
-                if (fireRate >= maxFireRate) fireRate = 0;
+                if (fireRate >= MaxFireRate) fireRate = 0;
             }
 
             crossHair = new Vector2(Globals.Lerp(crossHair.X, ((float)Math.Cos(turretRotation) * 100), 0.1f), Globals.Lerp(crossHair.Y, ((float)Math.Sin(turretRotation) * 100), 0.1f));
@@ -105,15 +174,15 @@ namespace CombatClone
             Rotation = Angle;
 
             base.Update();
-        } 
+        }
 
         public override void DrawSprite(SpriteBatch spriteBatch)
         {
-            if (hp >= 1)
+            if (Hp >= 1)
             {
                 spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, turretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.99f);
+                spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), Color.Black, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
             }
-            spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), Color.Black, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
             base.DrawSprite(spriteBatch);
         }
     }

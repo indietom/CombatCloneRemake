@@ -53,6 +53,16 @@ namespace CombatClone
                         destroy = true;
                     }
                     break;
+                case 3:
+                    if(destroy)
+                        GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, true));
+                    break;
+                case 4:
+                    Speed += 0.1f;
+                    Rotation = Angle;
+                    if (destroy)
+                        GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, true));
+                    break;
             }
 
             base.Update();
@@ -76,6 +86,16 @@ namespace CombatClone
                     SpriteCoords = new Point(43, 150);
                     Size = new Point(8, 8);
                     Orgin = new Vector2(4, 4);
+                    break;
+                case 3:
+                    SpriteCoords = new Point(34, 150);
+                    Size = new Point(8, 8);
+                    Orgin = new Vector2(4, 4);
+                    break;
+                case 4:
+                    SpriteCoords = new Point(67, 15);
+                    Size = new Point(16, 8);
+                    Orgin = new Vector2(8, 4);
                     break;
             }
         }

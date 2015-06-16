@@ -26,6 +26,8 @@ namespace CombatClone
             Color = Color.White;
 
             dangerous = dangerous2;
+
+            Z = 1;
         }
 
         public override void Update()
@@ -34,6 +36,15 @@ namespace CombatClone
             AnimationCount += 1;
 
             SpriteCoords = new Point(animationOffset + Frame(CurrentFrame, size), SpriteCoords.Y);
+
+            foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
+            {
+                if (dangerous && !hasHurtPlayer && p.Hitbox.Intersects(Hitbox))
+                {
+                    p.Hp -= 1;
+                    hasHurtPlayer = true;
+                }
+            }
 
             destroy = (CurrentFrame >= MaxFrame - 1) ? true : destroy;
             base.Update();

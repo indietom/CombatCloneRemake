@@ -72,16 +72,24 @@ namespace CombatClone
                 {
                     if (stoping)
                     {
+                        Size = new Point(24, 16);
+                        SpriteCoords = new Point(52, 133);
+
                         throwGranedeCount += 1;
                         if (throwGranedeCount >= maxThrowGrandeCount)
                         {
                             throwGranadeChance = (byte)random.Next(4);
                             if (throwGranadeChance == 1)
                             {
-                                GameObjectManager.Add(new Projectile(Pos, Rotation, MaxDistance/30, 2, 0, true));
+                                GameObjectManager.Add(new Projectile(Pos, Rotation, MaxDistance / 30, 2, 0, true));
                             }
                             throwGranedeCount = 0;
                         }
+                    }
+                    else
+                    {
+                        Size = new Point(16, 16);
+                        SpriteCoords = new Point(1, 133);
                     }
 
                     Shoot();
@@ -97,11 +105,14 @@ namespace CombatClone
             }
             else
             {
+                Size = new Point(16, 16);
+
                 if (!crushed)
                     SpriteCoords = new Point(35, 133);
                 else
                     SpriteCoords = new Point(1, 150);
             }
+
             base.Update();
         }
     }

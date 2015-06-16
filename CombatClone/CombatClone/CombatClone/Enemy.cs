@@ -54,6 +54,8 @@ namespace CombatClone
 
         public void UpdateHealth()
         {
+            Random random = new Random();
+
             foreach (Projectile p in GameObjectManager.gameObjects.Where(item => item is Projectile))
             {
                 if (p.Hitbox.Intersects(Hitbox) && !p.enemy)
@@ -63,12 +65,21 @@ namespace CombatClone
                 }
             }
 
+            foreach (Expolsion e in GameObjectManager.gameObjects.Where(item => item is Expolsion))
+            {
+                if (e.dangerous && e.Hitbox.Intersects(Hitbox))
+                {
+                    Hp = 0;
+                }
+            }
+
             if (Hp <= 0 && !leaveCorpse)
             {
                 destroy = true;
-                if (Size.X == 32)
+
+                for (int i = 0; i < 5; i++)
                 {
-                    GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, false));
+                    GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32) + new Vector2(random.Next(-Size.X, Size.X+1), random.Next(-Size.Y, Size.Y+1)), 65, false));
                 }
             }
         }

@@ -11,9 +11,14 @@ namespace CombatClone
     {
         public static Texture2D spritesheet;
 
+        public static SpriteFont smallFont, bigFont;
+
         public static void Load(ContentManager content)
         {
             spritesheet = content.Load<Texture2D>("spritesheet");
+
+            smallFont = content.Load<SpriteFont>("SmallFont");
+            bigFont = content.Load<SpriteFont>("BigFont");
         }
     }
 }
