@@ -32,7 +32,8 @@ namespace CombatClone
 
             GameObjectManager.Add(new Player());
             
-            GameObjectManager.Add(new Apc(new Vector2(500, 400)));
+            GameObjectManager.Add(new PowerUp(new Vector2(500, 400), 1, false));
+            GameObjectManager.Add(new PowerUp(new Vector2(300, 400), 0, true));
 
             base.Initialize();
         }

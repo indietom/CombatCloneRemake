@@ -12,6 +12,9 @@ namespace CombatClone
     {
         Vector2 topBar;
 
+        float displayScore;
+        float displayAmmo;
+
         public void Update()
         {
 
@@ -21,11 +24,18 @@ namespace CombatClone
         {
             foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
             {
+                displayScore = Globals.Lerp(displayScore, p.Score, 0.1f);
+                displayAmmo = Globals.Lerp(displayAmmo, p.CurrentAmmo, 0.05f);
+
                 for (int i = 0; i < p.Hp; i++)
                 {
                     spriteBatch.Draw(AssetManager.spritesheet, topBar + new Vector2(10 + i*32, 10), new Rectangle(133, 1, 24, 24), Color.White);
                 }
-                spriteBatch.DrawString(AssetManager.bigFont, "SCORE: " + p.Score.ToString().PadLeft(8, '0'), topBar + new Vector2(10, 48), Color.LightGreen);
+                spriteBatch.DrawString(AssetManager.bigFont, "SCORE: " + Convert.ToInt32(displayScore).ToString().PadLeft(8, '0'), topBar + new Vector2(10, 48), Color.LightGreen);
+                if (p.GunType != 0)
+                {
+                    spriteBatch.DrawString(AssetManager.bigFont, "AMMO: " + Convert.ToInt32(displayAmmo).ToString() + "/" + p.GetMaxAmmo(p.GunType), topBar + new Vector2(10, 70), Color.Gold);
+                }
             }
         }
 

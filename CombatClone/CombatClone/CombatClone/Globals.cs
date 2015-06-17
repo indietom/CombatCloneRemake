@@ -7,6 +7,8 @@ namespace CombatClone
 {
     class Globals
     {
+        public static byte amountOfEnemies = 6;
+
         public static float RadianToDegrees(float radian)
         {
             return radian * 180 / (float)Math.PI;
