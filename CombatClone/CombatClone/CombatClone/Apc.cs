@@ -38,6 +38,10 @@ namespace CombatClone
 
             Speed = 0.5f;
 
+            target = GenerateTarget;
+
+            destroyOnTarget = true;
+
             Orgin = new Vector2(32, 16);
             Size = new Point(64, 32);
             SpriteCoords = new Point(1, 232);
@@ -73,7 +77,10 @@ namespace CombatClone
 
             UpdateHealth();
 
-            SpawnEnemies();
+            if (Pos.X <= 640 && Pos.X >= 0 && Pos.Y >= 0 && Pos.Y <= 480)
+            {
+                SpawnEnemies();
+            }
 
             Shoot();
             FireRate += 1;

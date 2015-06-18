@@ -37,6 +37,14 @@ namespace CombatClone
             AngleMath();
             Pos += Velocity;
 
+            foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
+            {
+                if (GetDistance(p.Pos) >= 1500)
+                {
+                    destroy = true;
+                }
+            }
+
             Rotation = Angle;
 
             base.Update();

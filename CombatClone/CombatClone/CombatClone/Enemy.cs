@@ -29,6 +29,7 @@ namespace CombatClone
 
         public bool leaveCorpse;
         public bool stoping;
+        public bool destroyOnTarget;
 
         // All abord the OOP nightmare train
         public Projectile ProjectilePrototype 
@@ -46,6 +47,36 @@ namespace CombatClone
             return false;
         }
 
+        public Vector2 GenerateTarget
+        {
+            get
+            {
+                Random random = new Random();
+
+                if (Pos.Y >= 480)
+                {
+                    return new Vector2(random.Next(640), -100);
+                }
+                else if (Pos.Y <= 0)
+                {
+                    return new Vector2(random.Next(640), 740);
+                }
+                else
+                {
+                    if (Pos.X >= 640)
+                    {
+                        return new Vector2(-100, random.Next(480));
+                    }
+                    else if (Pos.X <= 0)
+                    {
+                        return new Vector2(740, random.Next(480));
+                    }
+                }
+
+                return Vector2.Zero;
+            }
+        }
+
         public float RotateTwoardsTarget(Vector2 aimAtTarget)
         {
             Target = new Vector2(Globals.Lerp(Target.X, aimAtTarget.X, RotateSpeed), Globals.Lerp(Target.Y, aimAtTarget.Y, RotateSpeed));
@@ -55,6 +86,14 @@ namespace CombatClone
         public void UpdateHealth()
         {
             Random random = new Random();
+
+            if (destroyOnTarget)
+            {
+                if (GetDistance(Target) <= 1)
+                {
+                    destroy = true;
+                }
+            }
 
             foreach (Projectile p in GameObjectManager.gameObjects.Where(item => item is Projectile))
             {

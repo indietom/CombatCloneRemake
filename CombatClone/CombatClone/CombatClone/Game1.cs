@@ -17,6 +17,7 @@ namespace CombatClone
         SpriteBatch spriteBatch;
 
         internal static Gui gui = new Gui();
+        internal static SpawnManager spawnManager = new SpawnManager();
 
         public Game1()
         {
@@ -56,6 +57,8 @@ namespace CombatClone
             Random random = new Random();
             if(GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed && GameObjectManager.gameObjects.Count <= 1) GameObjectManager.Add(new ArmoredCar(new Vector2(500, 400)));
             GameObjectManager.Update();
+
+            spawnManager.Update();
 
             base.Update(gameTime);
         }

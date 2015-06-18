@@ -23,6 +23,8 @@ namespace CombatClone
 
             Hp = 2;
 
+            destroyOnTarget = true;
+
             SpriteCoords = new Point(1, 199);
             Size = new Point(32, 32);
             Orgin = new Vector2(16, 16);
