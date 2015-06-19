@@ -18,7 +18,7 @@ namespace CombatClone
         public int Score { get; set; }
 
         float friction;
-        float turretRotation;
+        public float TurretRotation { get; private set; }
 
         short fireRate;
         short explosionDelay;
@@ -117,7 +117,7 @@ namespace CombatClone
             Random random = new Random();
 
             if (gamePad.ThumbSticks.Right.Y >= 0.2f || gamePad.ThumbSticks.Right.Y <= -0.2 || gamePad.ThumbSticks.Right.X >= 0.2f || gamePad.ThumbSticks.Right.X <= -0.2)
-                turretRotation = (float)Math.Atan2(-gamePad.ThumbSticks.Right.Y, gamePad.ThumbSticks.Right.X);
+                TurretRotation = (float)Math.Atan2(-gamePad.ThumbSticks.Right.Y, gamePad.ThumbSticks.Right.X);
 
             if (gamePad.ThumbSticks.Left.X >= 0.45f) Angle += 3;
             if (gamePad.ThumbSticks.Left.X <= -0.45f) Angle -= 3;
@@ -129,23 +129,23 @@ namespace CombatClone
             {
                 if (GunType == 0)
                 {
-                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation)+random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 0, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation)+random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 0, 1, false));
                 }
                 if (GunType == 1)
                 {
                     for (int i = -1; i < 2; i++)
                     {
-                        GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + i*-8, (float)Math.Abs(Speed) + 10, 0, 1, false));
+                        GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + i*-8, (float)Math.Abs(Speed) + 10, 0, 1, false));
                     }
                 }
                 if (GunType == 2)
                 {
-                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + random.Next(-16, 17), (float)Math.Abs(Speed) + 10, 0, 1, false));
-                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + random.Next(-32, 33), (float)Math.Abs(Speed) + 10 + random.Next(-3, 6), 1, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + random.Next(-16, 17), (float)Math.Abs(Speed) + 10, 0, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + random.Next(-32, 33), (float)Math.Abs(Speed) + 10 + random.Next(-3, 6), 1, 1, false));
                 }
                 if (GunType == 3)
                 {
-                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + random.Next(-8, 9), (float)Math.Abs(Speed) + 1, 4, 1, false));
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + random.Next(-8, 9), (float)Math.Abs(Speed) + 1, 4, 1, false));
                 }
                 fireRate = 1;
             }
@@ -200,7 +200,7 @@ namespace CombatClone
                 if (fireRate >= MaxFireRate) fireRate = 0;
             }
 
-            crossHair = new Vector2(Globals.Lerp(crossHair.X, ((float)Math.Cos(turretRotation) * 100), 0.1f), Globals.Lerp(crossHair.Y, ((float)Math.Sin(turretRotation) * 100), 0.1f));
+            crossHair = new Vector2(Globals.Lerp(crossHair.X, ((float)Math.Cos(TurretRotation) * 100), 0.1f), Globals.Lerp(crossHair.Y, ((float)Math.Sin(TurretRotation) * 100), 0.1f));
 
             Rotation = Angle;
 
@@ -211,7 +211,7 @@ namespace CombatClone
         {
             if (Hp >= 1)
             {
-                spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, turretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.99f);
+                spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, TurretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.98f);
                 spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), Color.White, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
             }
             base.DrawSprite(spriteBatch);

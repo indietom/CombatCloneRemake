@@ -35,6 +35,7 @@ namespace CombatClone
             
             GameObjectManager.Add(new PowerUp(new Vector2(500, 400), 1, false));
             GameObjectManager.Add(new PowerUp(new Vector2(300, 400), 0, true));
+            if(GamePad.GetState(PlayerIndex.Two).IsConnected) GameObjectManager.Add(new TurretPlayer());
 
             base.Initialize();
         }
@@ -66,6 +67,10 @@ namespace CombatClone
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(AssetManager.background, Vector2.Zero, Color.White);
+            spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
 

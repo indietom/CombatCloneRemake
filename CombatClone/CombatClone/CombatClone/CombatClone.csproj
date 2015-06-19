@@ -131,6 +131,7 @@
     <Compile Include="SpawnManager.cs" />
     <Compile Include="Tank.cs" />
     <Compile Include="TextEffect.cs" />
+    <Compile Include="TurretPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
