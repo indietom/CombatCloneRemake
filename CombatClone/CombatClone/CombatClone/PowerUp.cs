@@ -13,6 +13,9 @@ namespace CombatClone
 
         bool special;
 
+        short lifeTime;
+        short maxLifeTime;
+
         float waveCount;
 
         public PowerUp(Vector2 pos2, byte type2, bool special2)
@@ -27,6 +30,8 @@ namespace CombatClone
             Scale = 1;
             Orgin = new Vector2(12, 12);
             Color = Color.White;
+
+            maxLifeTime = 128 * 2;
 
             Z = 0.1f;
         }
@@ -62,6 +67,14 @@ namespace CombatClone
             Rotation += (float)Math.Sin(20 * waveCount + 30);
 
             PickUpUpdate();
+
+            lifeTime += 1;
+
+            if (lifeTime >= maxLifeTime)
+            {
+                Scale = Globals.Lerp(Scale, 0, 0.05f);
+                if (Scale <= 0.1f) destroy = true;
+            }
 
             base.Update();
         }

@@ -32,7 +32,7 @@ namespace CombatClone
         bool inputActive;
         bool disabeld;
         bool deadCrew;
-        bool invisible = true;
+        bool invisible;
 
         public Player()
         {

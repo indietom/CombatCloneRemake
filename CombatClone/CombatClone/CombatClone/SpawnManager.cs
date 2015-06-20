@@ -12,24 +12,50 @@ namespace CombatClone
 
         byte enemyLevel;
         byte currentLevel;
+        byte chanceOfSpecial;
 
         short[] spawnEnemyCount = new short[Globals.amountOfEnemies];
         short[] maxSpawnEnemyCount = new short[Globals.amountOfEnemies];
+        short[] orginalMaxSpawnEnemyCount = new short[Globals.amountOfEnemies];
 
         short nextLevelCount;
         short maxNextLevelCount;
 
+        short powerUpSpawnCount;
+        short maxPowerUpSpawnCount;
+
         public SpawnManager()
         {
+            maxPowerUpSpawnCount = 128 * 7;
+
             for (int i = 0; i < Globals.amountOfEnemies; i++)
             {
                 maxSpawnEnemyCount[i] = (short)(128 + 64 * i);
+                orginalMaxSpawnEnemyCount[i] = maxSpawnEnemyCount[i];
             }
         }
 
         public void LevelUpdate()
         {
+            maxNextLevelCount = (short)((256 * 2) + (currentLevel * 5));
 
+            nextLevelCount += 10;
+            if (nextLevelCount >= maxNextLevelCount)
+            {
+                currentLevel += 1;
+                nextLevelCount = 0;
+            }
+
+            for (int i = 0; i < Globals.amountOfEnemies; i++)
+            {
+                if (i != HELICOPTER)
+                {
+                    if (currentLevel <= 20) maxSpawnEnemyCount[i] = (short)(orginalMaxSpawnEnemyCount[i] - currentLevel * 2);
+                    else maxSpawnEnemyCount[i] = (short)(orginalMaxSpawnEnemyCount[i] - 20 * 2);
+                }
+            }
+
+            maxSpawnEnemyCount[HELICOPTER] = 128 * 17;
         }
 
         public void AddEnemy(byte type)
@@ -47,8 +73,6 @@ namespace CombatClone
                 if (tmp.X >= 740 || tmp.X <= -150 || tmp.Y >= 680 || tmp.Y <= -150) cantSpawn = false;
             }
 
-            Console.WriteLine(tmp);
-
             switch (type)
             {
                 case PLANE:
@@ -64,7 +88,8 @@ namespace CombatClone
                     GameObjectManager.gameObjects.Add(new Apc(tmp));
                     break;
                 case HELICOPTER:
-                    GameObjectManager.gameObjects.Add(new Helicopter(tmp));
+                    if (GameObjectManager.gameObjects.Where(item => item is Helicopter).Count() == 0)
+                        GameObjectManager.gameObjects.Add(new Helicopter(tmp));
                     break;
                 case ARMORED_CAR:
                     GameObjectManager.gameObjects.Add(new ArmoredCar(tmp));
@@ -74,8 +99,7 @@ namespace CombatClone
 
         public void EnemySpawnUpdate()
         {
-            enemyLevel = Globals.amountOfEnemies;
-
+            enemyLevel = (currentLevel >= Globals.amountOfEnemies-2) ? Globals.amountOfEnemies : (byte)(2+currentLevel);
 
             for (int i = 0; i < enemyLevel; i++)
             {
@@ -88,10 +112,33 @@ namespace CombatClone
             }
         }
 
+        public void PowerUpSpawnUpdate()
+        {
+            Random random = new Random();
+
+            powerUpSpawnCount += 1;
+
+            if (powerUpSpawnCount >= maxPowerUpSpawnCount && GameObjectManager.gameObjects.Where(item => item is PowerUp).Count() <= 2)
+            {
+                chanceOfSpecial = (byte)random.Next(5);
+
+                if (chanceOfSpecial == 3)
+                {
+                    GameObjectManager.Add(new PowerUp(new Vector2(random.Next(16, 640 - 16), random.Next(16, 480 - 16)), (byte)random.Next(1), true));
+                }
+                else
+                {
+                    GameObjectManager.Add(new PowerUp(new Vector2(random.Next(16, 640 - 16), random.Next(16, 480 - 16)), (byte)random.Next(3), false));
+                }
+                powerUpSpawnCount = 0;
+            }
+        }
+
         public void Update()
         {
             LevelUpdate();
             EnemySpawnUpdate();
+            PowerUpSpawnUpdate();
         }
     }
 }

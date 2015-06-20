@@ -32,9 +32,7 @@ namespace CombatClone
             AssetManager.Load(Content);
 
             GameObjectManager.Add(new Player());
-            
-            GameObjectManager.Add(new PowerUp(new Vector2(500, 400), 1, false));
-            GameObjectManager.Add(new PowerUp(new Vector2(300, 400), 0, true));
+
             if(GamePad.GetState(PlayerIndex.Two).IsConnected) GameObjectManager.Add(new TurretPlayer());
 
             base.Initialize();
