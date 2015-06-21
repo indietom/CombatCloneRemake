@@ -12,7 +12,7 @@ namespace CombatClone
         {
             Pos = pos2;
 
-            Speed = random.Next(5, 10);
+            Speed = random.Next(3, 6);
 
             Hp = 1;
 
@@ -28,6 +28,8 @@ namespace CombatClone
             Scale = 1;
             Color = Color.White;
             Orgin = new Vector2(16, 16);
+
+            Worth = 100;
         }
 
         public override void Update()
@@ -39,6 +41,12 @@ namespace CombatClone
 
             foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
             {
+                if (TouchedPlayer())
+                {
+                    GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, true));
+                    destroy = true;
+                }
+
                 if (GetDistance(p.Pos) >= 1500)
                 {
                     destroy = true;

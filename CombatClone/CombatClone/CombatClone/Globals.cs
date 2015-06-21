@@ -9,6 +9,11 @@ namespace CombatClone
     {
         public static byte amountOfEnemies = 6;
 
+        // what is enums
+        public static bool startScreen = true;
+        public static bool gameOver;
+        public static bool paused;
+
         public static float RadianToDegrees(float radian)
         {
             return radian * 180 / (float)Math.PI;

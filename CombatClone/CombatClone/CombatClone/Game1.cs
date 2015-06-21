@@ -19,6 +19,8 @@ namespace CombatClone
         internal static Gui gui = new Gui();
         internal static SpawnManager spawnManager = new SpawnManager();
 
+        bool startedGame;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -26,6 +28,9 @@ namespace CombatClone
 
             graphics.PreferredBackBufferWidth = 640;
         }
+
+        GamePadState gamePad;
+        GamePadState prevGamePad;
 
         protected override void Initialize()
         {
@@ -53,11 +58,47 @@ namespace CombatClone
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            Random random = new Random();
-            if(GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed && GameObjectManager.gameObjects.Count <= 1) GameObjectManager.Add(new ArmoredCar(new Vector2(500, 400)));
-            GameObjectManager.Update();
+            prevGamePad = gamePad;
+            gamePad = GamePad.GetState(PlayerIndex.One);
 
-            spawnManager.Update();
+            if (!startedGame)
+            {
+                GameObjectManager.Update();
+                spawnManager.Update();
+                startedGame = true;
+            }
+
+            if (Globals.startScreen)
+            {
+                if (gamePad.IsButtonDown(Buttons.A) && !prevGamePad.IsButtonDown(Buttons.A))
+                {
+                    Globals.startScreen = false;
+                }
+            }
+            else
+            {
+                if (!Globals.paused)
+                {
+                    GameObjectManager.Update();
+                    spawnManager.Update();
+                }
+
+                if (Globals.gameOver)
+                {
+                    if (gamePad.IsButtonDown(Buttons.A) && !prevGamePad.IsButtonDown(Buttons.A))
+                    {
+                        GameObjectManager.gameObjects.Clear();
+                        GameObjectManager.Add(new Player());
+                        if (GamePad.GetState(PlayerIndex.Two).IsConnected) GameObjectManager.Add(new TurretPlayer());
+                        spawnManager = new SpawnManager();
+                    }
+                }
+
+                if (gamePad.IsButtonDown(Buttons.Start) && !prevGamePad.IsButtonDown(Buttons.Start) && !Globals.gameOver)
+                {
+                    Globals.paused = !Globals.paused;
+                }
+            }
 
             base.Update(gameTime);
         }

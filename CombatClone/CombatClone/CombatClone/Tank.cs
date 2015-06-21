@@ -33,6 +33,8 @@ namespace CombatClone
             Scale = 1;
             Color = Color.Red;
             Orgin = new Vector2(16, 16);
+
+            Worth = 1000;
         }
 
         public override void Update()

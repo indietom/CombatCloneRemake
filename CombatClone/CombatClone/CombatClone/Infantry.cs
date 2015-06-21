@@ -44,6 +44,8 @@ namespace CombatClone
 
             active = true;
 
+            Worth = 500;
+
             Z = 0;
         }
 
@@ -55,6 +57,10 @@ namespace CombatClone
             {
                 Hp = 0;
                 Rotation = random.Next(360);
+                foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
+                {
+                    p.Score += 1000;
+                }
                 crushed = true;
             }
 

@@ -37,6 +37,8 @@ namespace CombatClone
             MaxDistance = 128*3;
 
             Z = 0.999f;
+
+            Worth = 2000;
         }
 
         public override void Update()

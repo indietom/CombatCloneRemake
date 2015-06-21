@@ -110,6 +110,12 @@ namespace CombatClone
             AngleMath();
 
             Pos += Velocity;
+
+            if (Pos.X >= 640 - 16 || Pos.X <= 16 || Pos.Y >= 480 - 16 || Pos.Y <= 16)
+            {
+                Speed = 0;
+                Pos -= Velocity;
+            }
         }
 
         public void Input()
@@ -161,6 +167,16 @@ namespace CombatClone
                     p.destroy = true;
                 }
             }
+
+            foreach (Enemy e in GameObjectManager.gameObjects.Where(item => item is Enemy))
+            {
+                if (!e.leaveCorpse && e.TouchedPlayer())
+                {
+                    Hp -= 1;
+                }
+            }
+
+            Globals.gameOver = (Hp <= 0);
 
             if (Hp <= 0)
             {

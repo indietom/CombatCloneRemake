@@ -49,6 +49,8 @@ namespace CombatClone
             Color = Color.White;
 
             Z = 0.5f;
+
+            Worth = 1500;
         }
 
         public void SpawnEnemies()

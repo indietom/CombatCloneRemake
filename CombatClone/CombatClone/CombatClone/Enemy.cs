@@ -12,6 +12,7 @@ namespace CombatClone
         public Vector2 Target { get; set; }
 
         public short FireRate { get; set; }
+        public short Worth { get; set; }
         public short MaxFireRate { private get; set; }
         public short BurstInterval { private get; set; }
 
@@ -30,6 +31,7 @@ namespace CombatClone
         public bool leaveCorpse;
         public bool stoping;
         public bool destroyOnTarget;
+        public bool haveGivenScore;
 
         // All abord the OOP nightmare train
         public Projectile ProjectilePrototype 
@@ -109,6 +111,15 @@ namespace CombatClone
                 if (e.dangerous && e.Hitbox.Intersects(Hitbox))
                 {
                     Hp = 0;
+                }
+            }
+
+            if (Hp <= 0 && !haveGivenScore)
+            {
+                foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
+                {
+                    p.Score += Worth;
+                    haveGivenScore = true;
                 }
             }
 

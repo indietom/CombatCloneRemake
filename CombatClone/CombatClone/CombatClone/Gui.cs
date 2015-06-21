@@ -39,9 +39,38 @@ namespace CombatClone
             }
         }
 
+        public void DrawGameOverUi(SpriteBatch spriteBatch)
+        {
+            DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 100), "& - GAME OVER - &", Color.White, true);
+            foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
+            {
+                DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148), "FINAL SCORE: " + p.Score.ToString().PadLeft(8, '0'), Color.Gold, true);
+            }
+
+            DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148 + 48), "HIGHSCORE: ", Color.LightBlue, true);
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            DrawPlayerUi(spriteBatch);
+            if (!Globals.paused)
+            {
+                if (!Globals.gameOver)
+                    DrawPlayerUi(spriteBatch);
+            }
+            else
+            {
+                DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 240), "- PAUSED -", Color.Gold, true);
+            }
+
+            if (Globals.gameOver) DrawGameOverUi(spriteBatch);
+            if (Globals.startScreen) spriteBatch.Draw(AssetManager.startScreen, Vector2.Zero, Color.White);
+        }
+
+        public void DrawText(SpriteBatch spriteBatch, SpriteFont font, Vector2 pos, string text, Color color, bool center)
+        {
+            Vector2 orgin = (center) ? new Vector2(font.MeasureString(text).X / 2, font.MeasureString(text).Y / 2) : Vector2.Zero;
+
+            spriteBatch.DrawString(font, text, pos, color, 0, orgin, 1, SpriteEffects.None, 0);
         }
     }
 }

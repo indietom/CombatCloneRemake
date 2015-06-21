@@ -27,10 +27,13 @@ namespace CombatClone
         public SpawnManager()
         {
             maxPowerUpSpawnCount = 128 * 7;
+            maxNextLevelCount = 265;
+
+            currentLevel = 0;
 
             for (int i = 0; i < Globals.amountOfEnemies; i++)
             {
-                maxSpawnEnemyCount[i] = (short)(128 + 64 * i);
+                maxSpawnEnemyCount[i] = (short)(256 + (128 *2) * (i+1));
                 orginalMaxSpawnEnemyCount[i] = maxSpawnEnemyCount[i];
             }
         }
