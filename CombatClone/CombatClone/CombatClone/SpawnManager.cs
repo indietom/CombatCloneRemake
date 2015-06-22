@@ -139,9 +139,12 @@ namespace CombatClone
 
         public void Update()
         {
-            LevelUpdate();
-            EnemySpawnUpdate();
-            PowerUpSpawnUpdate();
+            if (!Globals.gameOver)
+            {
+                LevelUpdate();
+                EnemySpawnUpdate();
+                PowerUpSpawnUpdate();
+            }
         }
     }
 }

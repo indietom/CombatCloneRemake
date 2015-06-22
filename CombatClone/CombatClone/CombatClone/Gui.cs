@@ -15,11 +15,6 @@ namespace CombatClone
         float displayScore;
         float displayAmmo;
 
-        public void Update()
-        {
-
-        }
-
         public void DrawPlayerUi(SpriteBatch spriteBatch)
         {
             foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
@@ -47,7 +42,7 @@ namespace CombatClone
                 DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148), "FINAL SCORE: " + p.Score.ToString().PadLeft(8, '0'), Color.Gold, true);
             }
 
-            DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148 + 48), "HIGHSCORE: ", Color.LightBlue, true);
+            DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148 + 48), "HIGHSCORE: " + Globals.Highscore.ToString(), Color.LightBlue, true);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -62,7 +57,11 @@ namespace CombatClone
                 DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 240), "- PAUSED -", Color.Gold, true);
             }
 
-            if (Globals.gameOver) DrawGameOverUi(spriteBatch);
+            if (Globals.gameOver)
+            {
+                displayScore = 0;
+                DrawGameOverUi(spriteBatch);
+            }
             if (Globals.startScreen) spriteBatch.Draw(AssetManager.startScreen, Vector2.Zero, Color.White);
         }
 

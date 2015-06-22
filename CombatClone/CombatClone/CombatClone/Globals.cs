@@ -14,6 +14,22 @@ namespace CombatClone
         public static bool gameOver;
         public static bool paused;
 
+        static int currentHighScore;
+
+        public static int Highscore
+        {
+            get
+            {
+                foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
+                {
+                    if (p.Score > currentHighScore)
+                        currentHighScore = p.Score;
+                }
+
+                return currentHighScore;
+            }
+        }
+
         public static float RadianToDegrees(float radian)
         {
             return radian * 180 / (float)Math.PI;
