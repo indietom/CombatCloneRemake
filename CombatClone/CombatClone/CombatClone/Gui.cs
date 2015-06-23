@@ -43,6 +43,8 @@ namespace CombatClone
             }
 
             DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148 + 48), "HIGHSCORE: " + Globals.Highscore.ToString(), Color.LightBlue, true);
+
+            DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 460), "PRESS A TO RESTART", Color.White, true);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -62,7 +64,11 @@ namespace CombatClone
                 displayScore = 0;
                 DrawGameOverUi(spriteBatch);
             }
-            if (Globals.startScreen) spriteBatch.Draw(AssetManager.startScreen, Vector2.Zero, Color.White);
+            if (Globals.startScreen)
+            {
+                spriteBatch.Draw(AssetManager.startScreen, Vector2.Zero, Color.White);
+                DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 460), "PRESS A TO START", Color.White, true);
+            }
         }
 
         public void DrawText(SpriteBatch spriteBatch, SpriteFont font, Vector2 pos, string text, Color color, bool center)

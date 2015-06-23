@@ -46,7 +46,7 @@ namespace CombatClone
 
             Worth = 500;
 
-            Z = 0;
+            Z = 0.01f;
         }
 
         public override void Update()
@@ -112,6 +112,8 @@ namespace CombatClone
             else
             {
                 Size = new Point(16, 16);
+
+                Z = 0;
 
                 if (!crushed)
                     SpriteCoords = new Point(35, 133);
