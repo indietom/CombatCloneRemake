@@ -60,6 +60,9 @@ namespace CombatClone
                 case 4:
                     Speed += 0.1f;
                     Rotation = Angle;
+
+                    GameObjectManager.Add(new Particle(Pos , new Point(8, 8), new Point(34, 177), 0, 0, 5*4, 6, 4)); 
+
                     if (destroy)
                         GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, true));
                     break;

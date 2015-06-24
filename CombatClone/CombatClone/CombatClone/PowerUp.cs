@@ -33,7 +33,7 @@ namespace CombatClone
 
             maxLifeTime = 128 * 2;
 
-            Z = 0.1f;
+            Z = 0.2f;
         }
 
         public void PickUpUpdate()

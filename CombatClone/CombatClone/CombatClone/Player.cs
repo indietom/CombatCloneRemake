@@ -51,7 +51,6 @@ namespace CombatClone
             Color = new Color(random.Next(100, 255), random.Next(100, 255), random.Next(100, 255));
             Scale = 1;
 
-            GunType = 3;
             inputActive = true;
 
             Z = 0.9f;

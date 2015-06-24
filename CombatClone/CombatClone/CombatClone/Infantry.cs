@@ -12,6 +12,7 @@ namespace CombatClone
         short maxThrowGrandeCount;
 
         byte throwGranadeChance;
+        byte amountOfGuts;
 
         bool crushed;
         bool active;
@@ -61,6 +62,14 @@ namespace CombatClone
                 {
                     p.Score += 1000;
                 }
+
+                amountOfGuts = (byte)random.Next(5, 11);
+
+                for (int i = 0; i < amountOfGuts; i++)
+                {
+                    GameObjectManager.Add(new Particle(Pos + new Vector2(random.Next(-Size.X / 2, Size.X / 2), random.Next(-Size.Y / 2, Size.Y / 2)), new Point(8, 8), new Point(Frame(random.Next(3), 8) + 33, 168), random.Next(360), random.Next(1, 5), 0, 0, 0)); 
+                }
+
                 crushed = true;
             }
 
