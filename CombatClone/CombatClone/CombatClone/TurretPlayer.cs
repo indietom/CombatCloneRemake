@@ -80,7 +80,7 @@ namespace CombatClone
             if (draw)
             {
                 base.DrawSprite(spriteBatch);
-                spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), crossHairColor, 0, new Vector2(8, 8), 1, SpriteEffects.None, 1);
+                spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair + Globals.screenOffset, new Rectangle(100, 1, 16, 16), crossHairColor, 0, new Vector2(8, 8), 1, SpriteEffects.None, 1);
             }
         }
     }

@@ -61,6 +61,10 @@ namespace CombatClone
             prevGamePad = gamePad;
             gamePad = GamePad.GetState(PlayerIndex.One);
 
+            //if (gamePad.IsButtonDown(Buttons.B) || !prevGamePad.IsButtonDown(Buttons.B)) Globals.ShakeScreen(70);
+
+            Globals.UpdateScreenOffset();
+
             if (!startedGame)
             {
                 GameObjectManager.Update();
@@ -105,10 +109,10 @@ namespace CombatClone
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(168, 110, Convert.ToInt16(72)));
 
             spriteBatch.Begin();
-            spriteBatch.Draw(AssetManager.background, Vector2.Zero, Color.White);
+            spriteBatch.Draw(AssetManager.background, Globals.screenOffset, Color.White);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);

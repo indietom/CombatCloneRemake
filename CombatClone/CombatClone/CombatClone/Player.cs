@@ -171,7 +171,8 @@ namespace CombatClone
             {
                 if (!e.leaveCorpse && e.TouchedPlayer())
                 {
-                    Hp -= 1;
+                    if (e.ToString().Split('.')[1] != "Helicopter")
+                        Hp -= 1;
                 }
             }
 
@@ -226,8 +227,8 @@ namespace CombatClone
         {
             if (Hp >= 1)
             {
-                spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, TurretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.98f);
-                spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair, new Rectangle(100, 1, 16, 16), Color.White, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
+                spriteBatch.Draw(AssetManager.spritesheet, Pos + Globals.screenOffset, new Rectangle(34, 1, 28, 20), Color, TurretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.98f);
+                spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair + Globals.screenOffset, new Rectangle(100, 1, 16, 16), Color.White, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
             }
             base.DrawSprite(spriteBatch);
         }

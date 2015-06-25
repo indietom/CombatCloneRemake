@@ -33,7 +33,7 @@ namespace CombatClone
 
             maxLifeTime = 128 * 2;
 
-            Z = 0.2f;
+            Z = 1f;
         }
 
         public void PickUpUpdate()
@@ -81,7 +81,7 @@ namespace CombatClone
 
         public override void DrawSprite(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetManager.spritesheet, Pos + new Vector2(0, 0), new Rectangle(199, 166, 32, 32), Color.White, Globals.DegreesToRadian(-Rotation), new Vector2(16, 16), Scale, SpriteEffects.None, Z - 0.01f); 
+            spriteBatch.Draw(AssetManager.spritesheet, Pos + Globals.screenOffset, new Rectangle(199, 166, 32, 32), Color.White, Globals.DegreesToRadian(-Rotation), new Vector2(16, 16), Scale, SpriteEffects.None, Z - 0.01f); 
             base.DrawSprite(spriteBatch);
         }
     }

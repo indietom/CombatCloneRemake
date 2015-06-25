@@ -80,7 +80,7 @@ namespace CombatClone
 
         public virtual void DrawSprite(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(SpriteCoords.X, SpriteCoords.Y, Size.X, Size.Y), Color, Globals.DegreesToRadian(Rotation), Orgin, Scale, SpriteEffects.None, Z); 
+            spriteBatch.Draw(AssetManager.spritesheet, Pos + Globals.screenOffset, new Rectangle(SpriteCoords.X, SpriteCoords.Y, Size.X, Size.Y), Color, Globals.DegreesToRadian(Rotation), Orgin, Scale, SpriteEffects.None, Z); 
         }
     }
 }

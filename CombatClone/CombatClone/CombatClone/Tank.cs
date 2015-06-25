@@ -34,6 +34,8 @@ namespace CombatClone
             Color = Color.Red;
             Orgin = new Vector2(16, 16);
 
+            Z = 0.2f;
+
             Worth = 1000;
         }
 
@@ -66,7 +68,7 @@ namespace CombatClone
         public override void DrawSprite(SpriteBatch spriteBatch)
         {
             base.DrawSprite(spriteBatch);
-            spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(34, 1, 28, 20), Color, Globals.DegreesToRadian(turretRotation), new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.99f);
+            spriteBatch.Draw(AssetManager.spritesheet, Pos + Globals.screenOffset, new Rectangle(34, 1, 28, 20), Color, Globals.DegreesToRadian(turretRotation), new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.99f);
         }
     }
 }

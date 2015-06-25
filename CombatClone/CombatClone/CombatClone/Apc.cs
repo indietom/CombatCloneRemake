@@ -110,7 +110,7 @@ namespace CombatClone
         public override void DrawSprite(SpriteBatch spriteBatch)
         {
             base.DrawSprite(spriteBatch);
-            spriteBatch.Draw(AssetManager.spritesheet, Pos, new Rectangle(67, 232, 30, 16), Color, Globals.DegreesToRadian(turretRotation), new Vector2(8, 8), 1, SpriteEffects.None, 0.51f);
+            spriteBatch.Draw(AssetManager.spritesheet, Pos + Globals.screenOffset, new Rectangle(67, 232, 30, 16), Color, Globals.DegreesToRadian(turretRotation), new Vector2(8, 8), 1, SpriteEffects.None, 0.51f);
         }
     }
 }
