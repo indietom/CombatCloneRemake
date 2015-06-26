@@ -110,6 +110,11 @@ namespace CombatClone
 
             Pos += Velocity;
 
+            if ((float)Math.Abs(Speed) >= 0.5f)
+            {
+                GameObjectManager.Add(new Particle(Pos, new Point(1, 32), new Point(34, 34), Angle, 0, 0, 0, 0));
+            }
+
             if (Pos.X >= 640 - 16 || Pos.X <= 16 || Pos.Y >= 480 - 16 || Pos.Y <= 16)
             {
                 Speed = 0;

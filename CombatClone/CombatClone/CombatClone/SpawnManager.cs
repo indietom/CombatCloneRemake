@@ -53,7 +53,7 @@ namespace CombatClone
             {
                 if (i != HELICOPTER)
                 {
-                    if (currentLevel <= 20) maxSpawnEnemyCount[i] = (short)(orginalMaxSpawnEnemyCount[i] - currentLevel * 2);
+                    if (currentLevel <= 20) maxSpawnEnemyCount[i] = (short)(orginalMaxSpawnEnemyCount[i] - currentLevel * 5);
                     else maxSpawnEnemyCount[i] = (short)(orginalMaxSpawnEnemyCount[i] - 20 * 2);
                 }
             }

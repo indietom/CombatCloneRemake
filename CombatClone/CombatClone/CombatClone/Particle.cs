@@ -55,6 +55,11 @@ namespace CombatClone
                         Speed = Globals.Lerp(Speed, 0, 0.05f);
                         Rotation += Speed;
                     }
+                    if (SpriteCoords.Y == 34)
+                    {
+                        Rotation = Angle;
+                    }
+
                     break;
             }
 
@@ -72,7 +77,7 @@ namespace CombatClone
                 destroy = (lifeTime >= maxLifeTime) ? true : destroy;
             }
 
-            if (SpriteCoords.Y == 168) destroy = false;
+            if (SpriteCoords.Y == 168 || SpriteCoords.Y == 34) destroy = false;
 
             base.Update();
         }
