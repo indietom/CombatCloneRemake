@@ -131,7 +131,7 @@ namespace CombatClone
                 }
                 else
                 {
-                    GameObjectManager.Add(new PowerUp(new Vector2(random.Next(16, 640 - 16), random.Next(16, 480 - 16)), (byte)random.Next(3), false));
+                    GameObjectManager.Add(new PowerUp(new Vector2(random.Next(16, 640 - 16), random.Next(16, 480 - 16)), (byte)random.Next(4), false));
                 }
                 powerUpSpawnCount = 0;
             }

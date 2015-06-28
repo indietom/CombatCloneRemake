@@ -79,6 +79,21 @@ namespace CombatClone
             }
         }
 
+        public void SplitInTwo()
+        {
+            Point[] newSpriteCoords = new Point[2];
+
+            Point newSize = new Point(Size.X, Size.Y / 2);
+
+            for (int i = 0; i < newSpriteCoords.Count(); i++)
+            {
+                newSpriteCoords[i] = new Point(SpriteCoords.X, SpriteCoords.Y+i*Size.Y/2);
+            }
+
+            GameObjectManager.Add(new Projectile(Pos, Angle + 90, 5, newSpriteCoords[0], newSize, 1, false, Color));
+            GameObjectManager.Add(new Projectile(Pos, Angle - 90, 5, newSpriteCoords[1], newSize, 1, false, Color));
+        }
+
         public float RotateTwoardsTarget(Vector2 aimAtTarget)
         {
             Target = new Vector2(Globals.Lerp(Target.X, aimAtTarget.X, RotateSpeed), Globals.Lerp(Target.Y, aimAtTarget.Y, RotateSpeed));
@@ -102,6 +117,10 @@ namespace CombatClone
                 if (p.Hitbox.Intersects(Hitbox) && !p.enemy)
                 {
                     Hp -= (sbyte)p.Damege;
+                    if (Hp <= 0 && p.Type == 5)
+                    {
+                        SplitInTwo();
+                    }
                     p.destroy = true;
                 }
             }

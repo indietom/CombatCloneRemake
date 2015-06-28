@@ -8,7 +8,7 @@ namespace CombatClone
 {
     class Projectile : GameObject
     {
-        byte type;
+        public byte Type { get; private set; }
         public byte Damege { get; private set; }
 
         public bool enemy;
@@ -20,7 +20,7 @@ namespace CombatClone
             Speed = speed2;
             Angle = angle2;
 
-            type = type2;
+            Type = type2;
             AssignType();
 
             Damege = damege2;
@@ -33,6 +33,30 @@ namespace CombatClone
             Color = Color.White;
         }
 
+        public Projectile(Vector2 pos2, float angle2, float speed2, Point spriteCoords2, Point size2, byte damege2, bool enemy2, Color color2)
+        {
+            Pos = pos2;
+
+            Speed = speed2;
+            Angle = angle2;
+
+            Damege = damege2;
+
+            enemy = enemy2;
+
+            Z = 0.99f;
+
+            SpriteCoords = spriteCoords2;
+            Size = size2;
+
+            Orgin = new Vector2(Size.X / 2, Size.Y / 2);
+
+            Scale = 1;
+            Color = color2;
+
+            Rotation = Angle;
+        }
+
         public override void Update()
         {
             AngleMath();
@@ -40,7 +64,7 @@ namespace CombatClone
 
             if (Pos.X >= 640 + Size.X || Pos.X < -Size.X * 2 || Pos.Y >= 480 + Size.Y || Pos.Y <= -Size.Y * 2) destroy = true;
 
-            switch (type)
+            switch (Type)
             {
                 case 0:
                     Rotation += 10;
@@ -76,7 +100,7 @@ namespace CombatClone
 
         public void AssignType()
         {
-            switch (type)
+            switch (Type)
             {
                 case 0:
                     SpriteCoords = new Point(67, 1);

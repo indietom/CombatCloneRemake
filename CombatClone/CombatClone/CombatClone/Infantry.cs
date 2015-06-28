@@ -54,6 +54,14 @@ namespace CombatClone
         {
             Random random = new Random();
 
+            if (!crushed)
+            {
+                foreach (Projectile p in GameObjectManager.gameObjects.Where(item => item is Projectile))
+                {
+                    if (p.Hitbox.Intersects(Hitbox) && p.Type == 5) crushed = true;
+                }
+            }
+
             if (TouchedPlayer() && !crushed)
             {
                 Hp = 0;
