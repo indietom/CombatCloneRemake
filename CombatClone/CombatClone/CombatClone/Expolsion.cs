@@ -28,6 +28,8 @@ namespace CombatClone
             dangerous = dangerous2;
 
             Z = 1;
+
+            AssetManager.explosionSound.Play();
         }
 
         public override void Update()
@@ -39,7 +41,7 @@ namespace CombatClone
 
             foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
             {
-                if (dangerous && !hasHurtPlayer && p.Hitbox.Intersects(Hitbox))
+                if (dangerous && !hasHurtPlayer && p.Hitbox.Intersects(Hitbox) && !p.invisible)
                 {
                     p.Hp -= 1;
                     hasHurtPlayer = true;

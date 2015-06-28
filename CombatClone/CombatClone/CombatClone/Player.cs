@@ -15,6 +15,9 @@ namespace CombatClone
 
         Vector2 crossHair;
 
+        Color orginalColor;
+        Color shieldColor;
+
         public int Score { get; set; }
 
         float friction;
@@ -23,6 +26,10 @@ namespace CombatClone
         short fireRate;
         short explosionDelay;
         public short CurrentAmmo { get; set; }
+        short invisibleCount;
+        short maxInvisibleCount;
+        short hurtCount;
+        short maxHurtCount;
 
         public byte GunType { get; set; }
 
@@ -30,9 +37,7 @@ namespace CombatClone
         sbyte maxHp;
 
         bool inputActive;
-        bool disabeld;
-        bool deadCrew;
-        bool invisible;
+        public bool invisible;
 
         public Player()
         {
@@ -49,7 +54,13 @@ namespace CombatClone
             Orgin = new Vector2(16, 16);
 
             Color = new Color(random.Next(100, 255), random.Next(100, 255), random.Next(100, 255));
+            orginalColor = Color;
             Scale = 1;
+
+            invisibleCount = 1;
+            maxInvisibleCount = 128 * 3;
+
+            maxHurtCount = 32;
 
             inputActive = true;
 
@@ -76,6 +87,9 @@ namespace CombatClone
                     case 3:
                         maxFireRate = 64;
                         break;
+                    case 4:
+                        maxFireRate = 16;
+                        break;
                 }
 
                 return maxFireRate;
@@ -96,6 +110,9 @@ namespace CombatClone
                     break;
                 case 3:
                     maxAmmo = 10;
+                    break;
+                case 4:
+                    maxAmmo = 50;
                     break;
             }
 
@@ -157,16 +174,34 @@ namespace CombatClone
                 {
                     GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + random.Next(-8, 9), (float)Math.Abs(Speed) + 1, 4, 1, false));
                 }
+                if (GunType == 4)
+                {
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 5, 1, false));
+                }
                 fireRate = 1;
             }
         }
 
         public void UpdateHealth()
         {
+            if (hurtCount >= 1)
+            {
+                Color = Color.Red;
+
+                hurtCount += 1;
+                if (hurtCount >= maxHurtCount) hurtCount = 0;
+            }
+            else
+            {
+                Color = orginalColor;
+            }
+
             foreach (Projectile p in GameObjectManager.gameObjects.Where(item => item is Projectile))
             {
-                if (p.Hitbox.Intersects(Hitbox) && p.enemy)
+                if (p.Hitbox.Intersects(Hitbox) && p.enemy && hurtCount <= 0)
                 {
+                    hurtCount = 1;
+                    PlayHitSound();
                     Hp -= (sbyte)p.Damege;
                     p.destroy = true;
                 }
@@ -174,10 +209,15 @@ namespace CombatClone
 
             foreach (Enemy e in GameObjectManager.gameObjects.Where(item => item is Enemy))
             {
-                if (!e.leaveCorpse && e.TouchedPlayer())
+                if (!e.leaveCorpse && e.TouchedPlayer() && hurtCount == 0)
                 {
+                    // F
                     if (e.ToString().Split('.')[1] != "Helicopter")
+                    {
+                        hurtCount = 1;
+                        PlayHitSound();
                         Hp -= 1;
+                    }
                 }
             }
 
@@ -195,8 +235,15 @@ namespace CombatClone
             }
         }
 
+        public void PlayHitSound()
+        {
+            if (Hp > 0) AssetManager.hitSound.Play();
+        }
+
         public override void Update()
         {
+            Random random = new Random();
+
             prevGamePad = gamePad;
             gamePad = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.Circular);
 
@@ -205,12 +252,33 @@ namespace CombatClone
                 CurrentAmmo -= 1;
             }
 
+            if (fireRate == 2)
+            {
+                AssetManager.shootSound.Play();
+            }
+
             if (CurrentAmmo <= 0)
             {
                 GunType = 0;
             }
 
             if(!invisible) UpdateHealth();
+
+            Console.WriteLine(invisibleCount);
+
+            invisible = (invisibleCount > 0);
+
+            invisibleCount = (invisibleCount >= 1) ? (short)(invisibleCount + 1) : invisibleCount;
+            invisibleCount = (invisibleCount >= maxInvisibleCount) ? (short)0 : invisibleCount;
+
+            if (invisibleCount >= maxInvisibleCount - 128)
+            {
+                shieldColor = Color.Red;
+            }
+            else
+            {
+                shieldColor = Color.Blue;
+            }
 
             if (inputActive) Input();
             Movment();
@@ -234,6 +302,14 @@ namespace CombatClone
             {
                 spriteBatch.Draw(AssetManager.spritesheet, Pos + Globals.screenOffset, new Rectangle(34, 1, 28, 20), Color, TurretRotation, new Vector2(9.5f, 10), 1, SpriteEffects.None, 0.98f);
                 spriteBatch.Draw(AssetManager.spritesheet, Pos + crossHair + Globals.screenOffset, new Rectangle(100, 1, 16, 16), Color.White, Speed, new Vector2(8, 8), 1, SpriteEffects.None, 1);
+            }
+
+            if (invisible)
+            {
+                for (int i = 0; i < 360; i++)
+                {
+                    spriteBatch.Draw(AssetManager.spritesheet, Pos + new Vector2((float)Math.Cos(i) * 32, (float)Math.Sin(i) * 32), new Rectangle(166, 1, 4, 4), shieldColor, 0, Vector2.Zero, 1, SpriteEffects.None, 1); 
+                }
             }
             base.DrawSprite(spriteBatch);
         }

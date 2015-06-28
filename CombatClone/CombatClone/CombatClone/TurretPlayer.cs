@@ -48,6 +48,7 @@ namespace CombatClone
             {
                 GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(turretRotation) * 20, (float)Math.Sin(turretRotation) * 20), Globals.RadianToDegrees(turretRotation) + random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 0, 1, false));
                 fireRate = 1;
+                AssetManager.shootSound.Play(1, -1, 0);
             }
         }
 

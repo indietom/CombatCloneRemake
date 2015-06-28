@@ -53,15 +53,14 @@ namespace CombatClone
 
         }
 
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            this.Exit();
 
             prevGamePad = gamePad;
             gamePad = GamePad.GetState(PlayerIndex.One);
-
-            //if (gamePad.IsButtonDown(Buttons.B) || !prevGamePad.IsButtonDown(Buttons.B)) Globals.ShakeScreen(70);
 
             Globals.UpdateScreenOffset();
 
