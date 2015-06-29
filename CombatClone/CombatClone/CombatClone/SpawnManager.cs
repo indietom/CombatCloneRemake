@@ -31,6 +31,8 @@ namespace CombatClone
 
             currentLevel = 0;
 
+            GameObjectManager.Add(new TextEffect(new Vector2(320, -100), "GET READY!", Color.White, new Vector2(320, 240), 0.05f, 128 * 3));
+
             for (int i = 0; i < Globals.amountOfEnemies; i++)
             {
                 maxSpawnEnemyCount[i] = (short)(256 + (128 *2) * (i+1));
@@ -127,7 +129,7 @@ namespace CombatClone
 
                 if (chanceOfSpecial == 3)
                 {
-                    GameObjectManager.Add(new PowerUp(new Vector2(random.Next(16, 640 - 16), random.Next(16, 480 - 16)), (byte)random.Next(1), true));
+                    GameObjectManager.Add(new PowerUp(new Vector2(random.Next(16, 640 - 16), random.Next(16, 480 - 16)), (byte)random.Next(2), true));
                 }
                 else
                 {

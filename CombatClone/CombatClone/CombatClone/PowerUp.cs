@@ -53,6 +53,10 @@ namespace CombatClone
                         {
                             p.Hp += 1;
                         }
+                        if (type == 1)
+                        {
+                            p.InvisibleCount = 1;
+                        }
                     }
                     destroy = true;
                 }

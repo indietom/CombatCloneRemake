@@ -71,7 +71,7 @@ namespace CombatClone
             }
         }
 
-        public void DrawText(SpriteBatch spriteBatch, SpriteFont font, Vector2 pos, string text, Color color, bool center)
+        public static void DrawText(SpriteBatch spriteBatch, SpriteFont font, Vector2 pos, string text, Color color, bool center)
         {
             Vector2 orgin = (center) ? new Vector2(font.MeasureString(text).X / 2, font.MeasureString(text).Y / 2) : Vector2.Zero;
 

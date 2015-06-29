@@ -26,7 +26,7 @@ namespace CombatClone
         short fireRate;
         short explosionDelay;
         public short CurrentAmmo { get; set; }
-        short invisibleCount;
+        public short InvisibleCount { private get; set; }
         short maxInvisibleCount;
         short hurtCount;
         short maxHurtCount;
@@ -57,7 +57,6 @@ namespace CombatClone
             orginalColor = Color;
             Scale = 1;
 
-            invisibleCount = 1;
             maxInvisibleCount = 128 * 3;
 
             maxHurtCount = 32;
@@ -264,14 +263,12 @@ namespace CombatClone
 
             if(!invisible) UpdateHealth();
 
-            Console.WriteLine(invisibleCount);
+            invisible = (InvisibleCount > 0);
 
-            invisible = (invisibleCount > 0);
+            InvisibleCount = (InvisibleCount >= 1) ? (short)(InvisibleCount + 1) : InvisibleCount;
+            InvisibleCount = (InvisibleCount >= maxInvisibleCount) ? (short)0 : InvisibleCount;
 
-            invisibleCount = (invisibleCount >= 1) ? (short)(invisibleCount + 1) : invisibleCount;
-            invisibleCount = (invisibleCount >= maxInvisibleCount) ? (short)0 : invisibleCount;
-
-            if (invisibleCount >= maxInvisibleCount - 128)
+            if (InvisibleCount >= maxInvisibleCount - 128)
             {
                 shieldColor = Color.Red;
             }
@@ -308,7 +305,7 @@ namespace CombatClone
             {
                 for (int i = 0; i < 360; i++)
                 {
-                    spriteBatch.Draw(AssetManager.spritesheet, Pos + new Vector2((float)Math.Cos(i) * 32, (float)Math.Sin(i) * 32), new Rectangle(166, 1, 4, 4), shieldColor, 0, Vector2.Zero, 1, SpriteEffects.None, 1); 
+                    spriteBatch.Draw(AssetManager.spritesheet, Pos + new Vector2((float)Math.Cos(i) * 32, (float)Math.Sin(i) * 32), new Rectangle(166, 1, 4, 4), shieldColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0.999f); 
                 }
             }
             base.DrawSprite(spriteBatch);
