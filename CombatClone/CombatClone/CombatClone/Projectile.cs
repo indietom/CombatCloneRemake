@@ -64,6 +64,13 @@ namespace CombatClone
 
             if (Pos.X >= 640 + Size.X || Pos.X < -Size.X * 2 || Pos.Y >= 480 + Size.Y || Pos.Y <= -Size.Y * 2) destroy = true;
 
+            if (MaxFrame != 0)
+            {
+                AnimationCount += 1;
+                Animate();
+                SpriteCoords = new Point(Frame(CurrentFrame, Size.X), SpriteCoords.Y);
+            }
+
             switch (Type)
             {
                 case 0:
@@ -91,6 +98,11 @@ namespace CombatClone
                         GameObjectManager.Add(new Expolsion(Pos + new Vector2(-32, -32), 65, true));
                     break;
                 case 5:
+                    Rotation += Speed;
+                    break;
+                case 6:
+                    destroy = (CurrentFrame == MaxFrame - 1) ? true : destroy;
+                    Speed -= 0.01f;
                     Rotation += Speed;
                     break;
             }
@@ -131,6 +143,15 @@ namespace CombatClone
                     SpriteCoords = new Point(274, 199);
                     Size = new Point(24, 24);
                     Orgin = new Vector2(12, 12);
+                    break;
+                case 6:
+                    MinFrame = 4;
+                    MaxFrame = 11;
+                    MaxAnimationCount = 8;
+                    CurrentFrame = MinFrame;
+                    SpriteCoords = new Point(Frame(CurrentFrame), Frame(1));
+                    Size = new Point(32, 32);
+                    Orgin = new Vector2(16, 16);
                     break;
             }
         }

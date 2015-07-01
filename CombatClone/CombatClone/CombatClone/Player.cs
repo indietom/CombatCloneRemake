@@ -61,6 +61,9 @@ namespace CombatClone
 
             maxHurtCount = 32;
 
+            GunType = 5;
+            CurrentAmmo = GetMaxAmmo(5);
+
             inputActive = true;
 
             Z = 0.9f;
@@ -89,6 +92,9 @@ namespace CombatClone
                     case 4:
                         maxFireRate = 16;
                         break;
+                    case 5:
+                        maxFireRate = 4;
+                        break;
                 }
 
                 return maxFireRate;
@@ -112,6 +118,9 @@ namespace CombatClone
                     break;
                 case 4:
                     maxAmmo = 50;
+                    break;
+                case 5:
+                    maxAmmo = 1000;
                     break;
             }
 
@@ -176,6 +185,10 @@ namespace CombatClone
                 if (GunType == 4)
                 {
                     GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + random.Next(-8, 9), (float)Math.Abs(Speed) + 10, 5, 1, false));
+                }
+                if (GunType == 5)
+                {
+                    GameObjectManager.Add(new Projectile(Pos + new Vector2((float)Math.Cos(TurretRotation) * 20, (float)Math.Sin(TurretRotation) * 20), Globals.RadianToDegrees(TurretRotation) + random.Next(-16, 17), (float)Math.Abs(Speed) + random.Next(3, 6), 6, 1, false));
                 }
                 fireRate = 1;
             }
