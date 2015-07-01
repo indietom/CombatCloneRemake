@@ -15,6 +15,11 @@ namespace CombatClone
         float displayScore;
         float displayAmmo;
 
+        public Gui()
+        {
+            GameObjectManager.Add(new TextEffect(new Vector2(320, 400), "PRESS # TO START", Color.White, Vector2.Zero, 0.01f, 0, 1));
+        }
+
         public void DrawPlayerUi(SpriteBatch spriteBatch)
         {
             foreach (Player p in GameObjectManager.gameObjects.Where(item => item is Player))
@@ -67,7 +72,12 @@ namespace CombatClone
             if (Globals.startScreen)
             {
                 spriteBatch.Draw(AssetManager.startScreen, Vector2.Zero, Color.White);
-                DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 460), "PRESS A TO START", Color.White, true);
+            }
+
+            foreach (TextEffect t in GameObjectManager.gameObjects.Where(item => item is TextEffect))
+            {
+                t.DrawSprite(spriteBatch);
+                t.Update();
             }
         }
 

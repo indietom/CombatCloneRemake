@@ -21,7 +21,7 @@ namespace CombatClone
 
             RotateSpeed = 0.05f;
 
-            MaxDistance = 2 * random.Next(64, 129);
+            MaxDistance = random.Next(64, 129);
 
             OrginalSpeed = 0.4f;
             Speed = OrginalSpeed;

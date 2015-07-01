@@ -10,7 +10,6 @@ namespace CombatClone
 {
     class TextEffect : GameObject
     {
-        byte tag;
         byte type;
 
         short lifeTime;
@@ -18,9 +17,11 @@ namespace CombatClone
 
         string text;
 
+        float waveCount;
+
         Vector2 target;
 
-        public TextEffect(Vector2 pos2, string text2, Color color2, Vector2 target2, float speed2, short maxLifeTime2)
+        public TextEffect(Vector2 pos2, string text2, Color color2, Vector2 target2, float speed2, short maxLifeTime2, byte type2)
         {
             Pos = pos2;
 
@@ -35,6 +36,9 @@ namespace CombatClone
             Z = 1;
             Scale = 1;
 
+            type = 0;
+
+            type = type2;
             maxLifeTime = maxLifeTime2;
         }
 
@@ -45,9 +49,16 @@ namespace CombatClone
                 case 0:
                     Pos = new Vector2(Globals.Lerp(Pos.X, target.X, Speed), Globals.Lerp(Pos.Y, target.Y, Speed)); 
                     break;
+                case 1:
+                    Pos += new Vector2((float)Math.Sin(20 * waveCount + 30), 0);
+                    Rotation += (float)Math.Sin(20 * waveCount + 30);
+
+                    waveCount += Speed;
+                    break;
             }
 
-            destroy = (lifeTime >= maxLifeTime);
+            if (maxLifeTime != 0)
+                destroy = (lifeTime >= maxLifeTime);
 
             lifeTime += 1;
 

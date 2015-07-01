@@ -75,7 +75,9 @@ namespace CombatClone
             {
                 if (gamePad.IsButtonDown(Buttons.A) && !prevGamePad.IsButtonDown(Buttons.A))
                 {
+                    foreach (TextEffect t in GameObjectManager.gameObjects.Where(item => item is TextEffect)) t.destroy = true;
                     Globals.startScreen = false;
+                    GameObjectManager.Add(new TextEffect(new Vector2(320, -100), "GET READY!", Color.White, new Vector2(320, 240), 0.05f, 128 * 3, 0));
                 }
             }
             else
@@ -94,6 +96,7 @@ namespace CombatClone
                         GameObjectManager.Add(new Player());
                         if (GamePad.GetState(PlayerIndex.Two).IsConnected) GameObjectManager.Add(new TurretPlayer());
                         spawnManager = new SpawnManager();
+                        GameObjectManager.Add(new TextEffect(new Vector2(320, -100), "GET READY!", Color.White, new Vector2(320, 240), 0.05f, 128 * 3, 0));
                     }
                 }
 

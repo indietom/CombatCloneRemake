@@ -31,8 +31,6 @@ namespace CombatClone
 
             currentLevel = 0;
 
-            GameObjectManager.Add(new TextEffect(new Vector2(320, -100), "GET READY!", Color.White, new Vector2(320, 240), 0.05f, 128 * 3));
-
             for (int i = 0; i < Globals.amountOfEnemies; i++)
             {
                 maxSpawnEnemyCount[i] = (short)(256 + (128 *2) * (i+1));
