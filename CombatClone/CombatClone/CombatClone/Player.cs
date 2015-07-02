@@ -61,8 +61,8 @@ namespace CombatClone
 
             maxHurtCount = 32;
 
-            GunType = 5;
-            CurrentAmmo = GetMaxAmmo(5);
+            //GunType = 5;
+            //CurrentAmmo = GetMaxAmmo(5);
 
             inputActive = true;
 

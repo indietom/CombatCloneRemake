@@ -58,6 +58,7 @@ namespace CombatClone
                             p.InvisibleCount = 1;
                         }
                     }
+                    AssetManager.powerUpSound.Play();
                     destroy = true;
                 }
             }
