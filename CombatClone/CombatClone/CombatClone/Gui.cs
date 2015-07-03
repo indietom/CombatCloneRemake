@@ -10,6 +10,8 @@ namespace CombatClone
 {
     class Gui
     {
+        internal static ControllTyper controllTyper = new ControllTyper();
+
         Vector2 topBar;
 
         float displayScore;
@@ -47,7 +49,7 @@ namespace CombatClone
                 DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148), "FINAL SCORE: " + p.Score.ToString().PadLeft(8, '0'), Color.Gold, true);
             }
 
-            DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148 + 48), "HIGHSCORE: " + Globals.Highscore.ToString(), Color.LightBlue, true);
+            DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 148 + 48), "HIGHSCORE: " + Globals.HighscoreSimple.ToString(), Color.LightBlue, true);
 
             DrawText(spriteBatch, AssetManager.bigFont, new Vector2(320, 460), "PRESS A TO RESTART", Color.White, true);
         }
@@ -79,6 +81,9 @@ namespace CombatClone
                 t.DrawSprite(spriteBatch);
                 t.Update();
             }
+
+            controllTyper.Update();
+            controllTyper.Draw(spriteBatch);
         }
 
         public static void DrawText(SpriteBatch spriteBatch, SpriteFont font, Vector2 pos, string text, Color color, bool center)

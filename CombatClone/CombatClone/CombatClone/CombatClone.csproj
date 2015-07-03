@@ -114,6 +114,7 @@
     <Compile Include="ArmoredCar.cs" />
     <Compile Include="AssetManager.cs" />
     <Compile Include="AttackPlane.cs" />
+    <Compile Include="ControllTyper.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Expolsion.cs" />
     <Compile Include="GameObject.cs" />

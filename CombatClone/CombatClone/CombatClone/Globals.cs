@@ -19,6 +19,29 @@ namespace CombatClone
 
         static int currentHighScore;
 
+        public static Highscore[] highscores = new Highscore[10];
+
+        public static void UpdateHighScores(Highscore highscore)
+        {
+            int indexToReplace = 0;
+
+            for (int i = 0; i < highscores.Length; i++)
+            {
+                if (highscore.score > highscores[i].score)
+                {
+                    indexToReplace = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < highscores.Length; i++)
+            {
+                Highscore[] tmps = new Highscore[];
+
+
+            }
+        }
+
         public static void ShakeScreen(float intensity)
         {
             Random random = new Random();
@@ -40,7 +63,7 @@ namespace CombatClone
             }
         }
 
-        public static int Highscore
+        public static int HighscoreSimple
         {
             get
             {
@@ -67,6 +90,18 @@ namespace CombatClone
         public static float Lerp(float s, float e, float t)
         {
             return s + t * (e - s);
+        }
+    }
+
+    struct Highscore
+    {
+        public int score;
+        public string name;
+
+        public Highscore(int score2, string name2)
+        {
+            score = score2;
+            name = name2;
         }
     }
 }
